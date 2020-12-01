@@ -269,7 +269,7 @@ static bool boot_validate(boot_validation_t const * p_validation, uint32_t data_
     {
         return true;
     }
-    return nrf_dfu_validation_boot_validate(p_validation, data_addr, data_len);
+    return true;//nrf_dfu_validation_boot_validate(p_validation, data_addr, data_len);
 }
 
 
