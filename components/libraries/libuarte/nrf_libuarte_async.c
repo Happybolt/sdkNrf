@@ -157,13 +157,13 @@ static void app_timer_handler(void * p_context) __attribute__((unused));
 
 static uint32_t app_timer_ticks_to_us(uint32_t ticks)
 {
-    return (uint32_t)(((uint64_t)ticks * 1000000 * (APP_TIMER_CONFIG_RTC_FREQUENCY + 1)) /
+    return (uint32_t)(((uint64_t)ticks * 1000000 * (APP_TIMER_RTC_FREQUENCY + 1)) /
                       APP_TIMER_CLOCK_FREQ);
 }
 
 static uint32_t app_timer_us_to_ticks(uint32_t us)
 {
-    return (uint32_t)((((uint64_t)APP_TIMER_CLOCK_FREQ/(APP_TIMER_CONFIG_RTC_FREQUENCY + 1)) * us) /
+    return (uint32_t)((((uint64_t)APP_TIMER_CLOCK_FREQ/(APP_TIMER_RTC_FREQUENCY + 1)) * us) /
                       1000000);
 }
 

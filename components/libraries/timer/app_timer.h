@@ -89,7 +89,7 @@ extern "C" {
 
 #define APP_TIMER_CLOCK_FREQ            32768                     /**< Clock frequency of the RTC timer used to implement the app timer module. */
 #define APP_TIMER_MIN_TIMEOUT_TICKS     5                         /**< Minimum value of the timeout_ticks parameter of app_timer_start(). */
-
+#define APP_TIMER_RTC_FREQUENCY         APP_TIMER_CONFIG_RTC_FREQUENCY
 #ifdef RTX
 #define APP_TIMER_NODE_SIZE             40                        /**< Size of app_timer.timer_node_t (used to allocate data). */
 #else
@@ -114,10 +114,16 @@ extern "C" {
             ((uint32_t)ROUNDED_DIV(                        \
             (MS) * (uint64_t)APP_TIMER_CLOCK_FREQ,         \
             1000 * (APP_TIMER_CONFIG_RTC_FREQUENCY + 1)))
-#else
+#elif(configTICK_SOURCE == FREERTOS_USE_RTC)
 #include "FreeRTOSConfig.h"
 #define APP_TIMER_TICKS(MS) (uint32_t)ROUNDED_DIV((MS)*configTICK_RATE_HZ,1000)
+
+#undef  APP_TIMER_RTC_FREQUENCY
+#define APP_TIMER_RTC_FREQUENCY ( (uint32_t) (ROUNDED_DIV(configSYSTICK_CLOCK_HZ, configTICK_RATE_HZ) - 1) )
+#undef  APP_TIMER_MIN_TIMEOUT_TICKS
+#define APP_TIMER_MIN_TIMEOUT_TICKS     1
 #endif
+
 
 
 /**

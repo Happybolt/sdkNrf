@@ -240,4 +240,17 @@ uint32_t app_timer_stop(app_timer_id_t timer_id)
     pinfo->active = false;
     return NRF_SUCCESS;
 }
+
+uint32_t app_timer_cnt_get(void)
+{
+  return xTaskGetTickCount();
+}
+
+uint32_t app_timer_cnt_diff_compute(uint32_t   ticks_to,
+                                    uint32_t   ticks_from)
+{
+    return ((ticks_to - ticks_from) & RTC_COUNTER_COUNTER_Msk);
+}
+
+
 #endif //NRF_MODULE_ENABLED(APP_TIMER)
